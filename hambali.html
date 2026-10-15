@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#172554">
+<title>Web Belajar | hambali</title>
+
+<style>
+:root{
+  --navy:#172554; --blue:#2563eb; --cyan:#06b6d4; --purple:#7c3aed;
+  --ink:#1e293b; --muted:#64748b; --line:#e2e8f0; --surface:#fff;
+  --bg:#f3f6fc; --soft:#eff6ff; --success:#15803d; --danger:#dc2626;
+  --shadow:0 14px 35px rgba(30,41,59,.08);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:90px}
+body{margin:0;font-family:Inter,"Segoe UI",Tahoma,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6}
+a{color:inherit;text-decoration:none}
+button,input,select{font:inherit}
+button{cursor:pointer}
+
+.topbar{position:sticky;top:0;z-index:20;background:rgba(23,37,84,.96);backdrop-filter:blur(12px);color:#fff;box-shadow:0 4px 18px rgba(15,23,42,.15)}
+.nav-wrap{max-width:1180px;margin:auto;padding:0 22px;min-height:72px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.brand{display:flex;align-items:center;gap:11px;font-weight:800;letter-spacing:.2px}
+.brand-mark{display:grid;place-items:center;width:40px;height:40px;border-radius:13px;background:linear-gradient(135deg,var(--cyan),#818cf8);color:white;font-size:20px}
+.nav-links{display:flex;gap:19px;align-items:center;font-size:13px;color:#dbeafe}
+.nav-links a:hover{color:#67e8f9}
+.menu-toggle{display:none;background:transparent;border:1px solid #64748b;color:white;border-radius:9px;padding:7px 11px}
+
+.hero{background:radial-gradient(circle at 80% 20%,rgba(34,211,238,.25),transparent 28%),linear-gradient(125deg,#172554 0%,#1d4ed8 60%,#6d28d9 100%);color:#fff;padding:66px 22px 76px}
+.hero-inner{max-width:1136px;margin:auto;display:grid;grid-template-columns:1.5fr .8fr;align-items:center;gap:42px}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;padding:6px 12px;border:1px solid rgba(255,255,255,.25);border-radius:999px;background:rgba(255,255,255,.09);font-size:12px;font-weight:700;letter-spacing:.5px}
+.hero h1{font-size:clamp(32px,5vw,54px);line-height:1.1;margin:20px 0 16px;letter-spacing:-1.4px}
+.hero h1 span{color:#a5f3fc}
+.hero p{max-width:630px;color:#dbeafe;font-size:16px;margin:0 0 25px}
+.hero-actions{display:flex;flex-wrap:wrap;gap:12px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:10px;padding:11px 17px;font-weight:700;font-size:14px;transition:transform .15s,filter .15s}
+.btn:hover{filter:brightness(.97);transform:translateY(-1px)}
+.btn-primary{background:var(--blue);color:#fff}
+.btn-light{background:#fff;color:var(--navy)}
+.btn-outline{background:transparent;color:inherit;border:1px solid var(--line)}
+.hero .btn-outline{border-color:rgba(255,255,255,.4);color:white}
+
+.profile-card{background:rgba(255,255,255,.11);border:1px solid rgba(255,255,255,.22);border-radius:22px;padding:25px;backdrop-filter:blur(8px)}
+
+/* FOTO PROFIL FOTO.JPG */
+.profile-photo{
+  width:120px;
+  height:120px;
+  object-fit:cover;
+  border-radius:50%;
+  border:4px solid rgba(255,255,255,.8);
+  display:block;
+  margin-bottom:16px;
+  box-shadow:0 8px 20px rgba(0,0,0,.2);
+}
+
+.profile-card h2{margin:0 0 4px;font-size:21px}
+.profile-card p{font-size:13px;margin:0;color:#dbeafe}
+.profile-list{display:grid;gap:12px;margin-top:20px}
+.profile-row{display:flex;justify-content:space-between;gap:12px;padding-top:11px;border-top:1px solid rgba(255,255,255,.2);font-size:13px}
+.profile-row span:first-child{color:#bfdbfe}
+.profile-row span:last-child{font-weight:700;text-align:right}
+
+main{max-width:1136px;margin:-28px auto 0;padding:0 22px 50px;position:relative}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:30px}
+.stat{background:white;border:1px solid #edf2f7;border-radius:16px;padding:19px 21px;box-shadow:var(--shadow);display:flex;gap:14px;align-items:center}
+.stat-icon{width:44px;height:44px;display:grid;place-items:center;border-radius:13px;background:var(--soft);font-size:21px}
+.stat strong{display:block;font-size:19px;color:var(--navy)}
+.stat small{color:var(--muted);font-size:12px}
+
+.section{background:var(--surface);border:1px solid #e8edf5;border-radius:18px;padding:27px;margin:20px 0;box-shadow:var(--shadow);min-width:0}
+.section-heading{display:flex;align-items:flex-start;gap:13px;margin-bottom:21px}
+.section-icon{flex:0 0 43px;width:43px;height:43px;border-radius:13px;display:grid;place-items:center;background:linear-gradient(135deg,#dbeafe,#ede9fe);font-size:21px}
+.section-heading h2{font-size:21px;line-height:1.25;margin:0 0 5px;color:var(--navy)}
+.section-heading p{margin:0;color:var(--muted);font-size:13px}
+.badge{font-size:11px;font-weight:800;background:#ecfeff;color:#0e7490;padding:5px 9px;border-radius:999px;margin-left:auto;white-space:nowrap}
+
+.table-wrap{width:100%;overflow-x:auto;border:1px solid var(--line);border-radius:12px}
+table{width:100%;border-collapse:collapse;min-width:580px;font-size:13px}
+th,td{text-align:left;padding:13px 15px;border-bottom:1px solid var(--line)}
+th{background:#f1f5f9;color:#334155;font-size:12px;text-transform:uppercase;letter-spacing:.4px}
+tbody tr:nth-child(even){background:#f8fafc}
+tbody tr:last-child td{border-bottom:0}
+tbody tr:hover{background:#eff6ff}
+
+.form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:17px}
+.field{display:flex;flex-direction:column;gap:6px;min-width:0}
+.field label{font-size:13px;font-weight:700;color:#334155}
+.field input,.field select,.field textarea{width:100%;min-width:0;border:1px solid #cbd5e1;border-radius:9px;padding:10px 12px;background:white;color:var(--ink);outline:none}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(37,99,235,.12)}
+.field small{font-size:11px;color:var(--muted)}
+.inline-field{display:flex;align-items:center;gap:9px;padding:10px 0}
+.inline-field input{width:auto}
+.form-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:18px}
+
+.result-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:20px}
+.result{background:#f8fafc;border:1px solid var(--line);padding:13px 15px;border-radius:11px}
+.result span{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);font-weight:800}
+.result strong{display:block;margin-top:4px;color:var(--navy);font-size:19px;overflow-wrap:anywhere}
+.note{margin-top:16px;padding:13px 15px;border-radius:10px;background:#eff6ff;color:#1e40af;font-size:13px}
+.code-output{padding:15px;background:#f8fafc;border:1px solid var(--line);border-radius:11px;overflow-wrap:anywhere;font-size:14px}
+.scroll-output{max-height:220px;overflow:auto}
+.two-col{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.mini-card{background:#fbfdff;border:1px solid var(--line);border-radius:13px;padding:18px;min-width:0}
+.mini-card h3{font-size:15px;color:var(--navy);margin:0 0 13px}
+.mini-card p{font-size:13px;color:var(--muted);margin:0 0 10px}
+.link-demo ul{padding-left:22px;margin:10px 0 0}
+.link-demo li{padding:5px 0}
+.link-demo li:nth-child(odd) a{color:#7c3aed}
+.link-demo li:nth-child(even) a{color:#15803d}
+.link-demo li:first-child a,.link-demo li:last-child a{font-weight:800}
+.clock{font-size:clamp(27px,5vw,42px);font-weight:800;letter-spacing:2px;text-align:center;color:var(--navy);font-variant-numeric:tabular-nums}
+.date-panel{text-align:center;background:linear-gradient(135deg,#eff6ff,#f5f3ff);border-radius:13px;padding:22px}
+.date-panel .date-main{font-weight:800;font-size:17px;color:var(--navy)}
+.date-panel .date-time{color:var(--muted);font-size:13px;margin-top:6px}
+.marquee-box{overflow:hidden;border-radius:10px;background:#e0f2fe;padding:13px;color:#075985;font-weight:800}
+.marquee-text{display:inline-block;white-space:nowrap;animation:marquee 12s linear infinite}
+@keyframes marquee{from{transform:translateX(100%)}to{transform:translateX(-100%)}}
+.background-demo{padding:20px;border:2px dashed #94a3b8;border-radius:12px;background:linear-gradient(135deg,#dcfce7,#dbeafe);color:#164e63}
+.background-demo p{margin:4px 0}
+.footer{margin-top:32px;padding:27px 20px;background:#172554;color:#cbd5e1;text-align:center;border-radius:18px;font-size:13px}
+.footer strong{color:white}
+.footer p{margin:5px}
+.status{font-size:13px;margin-top:12px;color:var(--success);font-weight:700}
+[hidden]{display:none!important}
+
+@media(max-width:850px){
+ .hero-inner{grid-template-columns:1fr;gap:25px}
+ .profile-card{max-width:520px}
+ .nav-links{display:none;position:absolute;left:0;right:0;top:72px;padding:18px 22px;background:#172554;flex-direction:column;align-items:flex-start}
+ .nav-links.open{display:flex}
+ .menu-toggle{display:block}
+}
+@media(max-width:640px){
+ .hero{padding:45px 18px 60px}
+ .hero h1{font-size:36px}
+ .nav-wrap{padding:0 17px}
+ main{padding:0 13px 30px}
+ .stats{grid-template-columns:1fr;gap:10px}
+ .stat{padding:14px 17px}
+ .section{padding:19px 15px;margin:14px 0;border-radius:14px}
+ .section-heading h2{font-size:18px}
+ .form-grid,.two-col,.result-grid{grid-template-columns:1fr}
+ .badge{display:none}
+ .hero p{font-size:14px}
+ .profile-card{padding:20px}
+ .btn{font-size:13px;padding:10px 13px}
+}
+</style>
+</head>
+
+<body>
+<header class="topbar">
+  <div class="nav-wrap">
+    <a class="brand" href="#beranda">
+      <span class="brand-mark">📘</span>
+      <span>Web Belajar</span>
+    </a>
+    <button class="menu-toggle" id="menuToggle" aria-label="Buka navigasi" aria-expanded="false">☰ Menu</button>
+    <nav class="nav-links" id="navLinks">
+      <a href="#mahasiswa">Data Mahasiswa</a>
+      <a href="#tiket">Tiket</a>
+      <a href="#beasiswa">Beasiswa</a>
+      <a href="#javascript">Latihan JavaScript</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero" id="beranda">
+  <div class="hero-inner">
+    <div>
+      <span class="eyebrow">PROYEK PEMROGRAMAN WEB</span>
+      <h1>Belajar web,<br><span>mulai dari sini.</span></h1>
+      <p>Website latihan HTML, CSS, dan JavaScript dengan tampilan modern, responsif, serta beberapa contoh aplikasi interaktif dalam satu halaman.</p>
+      <div class="hero-actions">
+        <a class="btn btn-light" href="#javascript">Jelajahi latihan ↓</a>
+        <a class="btn btn-outline" href="#mahasiswa">Lihat data mahasiswa</a>
+      </div>
+    </div>
+
+    <aside class="profile-card">
+      <!-- FOTO PROFIL -->
+      <img src="foto.jpg" alt="Foto profil mahasiswa" class="profile-photo"
+           onerror="this.alt='Foto tidak ditemukan. Periksa file foto.jpg';">
+
+      <h2>hambali</h2>
+      <p>Mahasiswa - Sistem Informasi</p>
+      <div class="profile-list">
+        <div class="profile-row"><span>NIM</span><span>241091700197</span></div>
+        <div class="profile-row"><span>Kelas</span><span>03SISE002</span></div>
+        <div class="profile-row"><span>Materi</span><span>HTML · CSS · JS</span></div>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<main>
+  <div class="stats">
+    <div class="stat"><div class="stat-icon">📚</div><div><strong>15 Bagian</strong><small>Materi dan latihan</small></div></div>
+    <div class="stat"><div class="stat-icon">⚡</div><div><strong>Interaktif</strong><small>Input dan tombol aktif</small></div></div>
+    <div class="stat"><div class="stat-icon">📱</div><div><strong>Responsif</strong><small>Nyaman di HP dan laptop</small></div></div>
+  </div>
+
+  <section class="section" id="mahasiswa">
+    <div class="section-heading"><div class="section-icon">🎓</div><div><h2>Data Mahasiswa</h2><p>Contoh tabel data mahasiswa dengan format yang lebih rapi.</p></div><span class="badge">BAGIAN 1</span></div>
+    <div class="table-wrap"><table>
+      <thead><tr><th>NIM</th><th>Nama</th><th>Alamat</th><th>Tempat, Tanggal Lahir</th><th>Jurusan</th></tr></thead>
+      <tbody>
+        <tr><td>12110001</td><td>Anita</td><td>Cengkareng</td><td>Jakarta, 20 Agustus 1990</td><td>Sistem Informasi</td></tr>
+        <tr><td>12110002</td><td>Aditya</td><td>Tangerang</td><td>Semarang, 01 Januari 1989</td><td>Sistem Informasi</td></tr>
+        <tr><td>12110003</td><td>Firman</td><td>Bogor</td><td>Jakarta, 18 September 1988</td><td>Sistem Informasi</td></tr>
+      </tbody>
+    </table></div>
+    <p class="note">Tip: pada layar HP, geser tabel ke samping untuk melihat seluruh kolom.</p>
+  </section>
+
+  <section class="section" id="tiket">
+    <div class="section-heading"><div class="section-icon">🎫</div><div><h2>Aplikasi Perhitungan Tiket</h2><p>Travel Bintang Abadi · Hitung harga, subtotal, diskon, dan total bayar.</p></div><span class="badge">BAGIAN 2</span></div>
+    <form id="ticketForm">
+      <div class="form-grid">
+        <div class="field"><label for="ticketName">Nama pemesan</label><input id="ticketName" type="text" placeholder="Masukkan nama"></div>
+        <div class="field"><label for="destination">Tujuan perjalanan</label><select id="destination"><option value="Jakarta">Jakarta — Rp100.000</option><option value="Cirebon">Cirebon — Rp150.000</option><option value="Tasikmalaya">Tasikmalaya — Rp200.000</option></select></div>
+        <div class="field"><label for="ticketQty">Jumlah tiket</label><input id="ticketQty" type="number" min="1" step="1" value="1" required></div>
+        <div class="field"><label>Keanggotaan</label><label class="inline-field"><input type="checkbox" id="member"> Saya anggota (diskon 10%)</label></div>
+      </div>
+      <div class="form-actions"><button class="btn btn-primary" type="submit">Hitung total</button><button class="btn btn-outline" type="reset">Ulangi</button></div>
+    </form>
+    <div class="result-grid">
+      <div class="result"><span>Harga tiket</span><strong id="ticketPrice">Rp0</strong></div>
+      <div class="result"><span>Subtotal</span><strong id="ticketSubtotal">Rp0</strong></div>
+      <div class="result"><span>Diskon</span><strong id="ticketDiscount">Rp0</strong></div>
+      <div class="result"><span>Total bayar</span><strong id="ticketTotal">Rp0</strong></div>
+    </div>
+    <div id="ticketMessage" class="status" aria-live="polite"></div>
+  </section>
+
+  <section class="section" id="dasar">
+    <div class="section-heading"><div class="section-icon">💻</div><div><h2>Dasar JavaScript</h2><p>Deklarasi variabel, penggabungan string, dan perulangan for.</p></div><span class="badge">BAGIAN 3</span></div>
+    <div class="two-col">
+      <div class="mini-card"><h3>1. Deklarasi variabel</h3><div class="code-output" id="basicOutput"></div></div>
+      <div class="mini-card"><h3>2. Penggabungan string</h3><div class="code-output" id="stringOutput"></div></div>
+    </div>
+    <div class="mini-card" style="margin-top:16px"><h3>3. Perulangan for (20 kali)</h3><div class="code-output scroll-output" id="loopOutput"></div></div>
+  </section>
+
+  <section class="section" id="beasiswa">
+    <div class="section-heading"><div class="section-icon">🏅</div><div><h2>Aplikasi Penerimaan Beasiswa</h2><p>Isi data mahasiswa untuk memeriksa kelayakan berdasarkan IPK.</p></div><span class="badge">BAGIAN 4</span></div>
+    <form id="scholarshipForm">
+      <div class="form-grid">
+        <div class="field"><label for="schName">Nama lengkap</label><input id="schName" required placeholder="Nama mahasiswa"></div>
+        <div class="field"><label for="schNim">NIM</label><input id="schNim" required placeholder="Nomor induk mahasiswa"></div>
+        <div class="field"><label for="schClass">Kelas</label><input id="schClass" required placeholder="Contoh: 03SISE002"></div>
+        <div class="field"><label for="schMajor">Jurusan</label><select id="schMajor"><option>Sistem Informasi</option><option>Teknik Informatika</option></select></div>
+        <div class="field"><label for="schGender">Jenis kelamin</label><select id="schGender" required><option value="">Pilih jenis kelamin</option><option>Pria</option><option>Wanita</option></select></div>
+        <div class="field"><label for="schIpk">IPK (0,00–4,00)</label><input id="schIpk" type="number" min="0" max="4" step="0.01" required placeholder="Contoh: 3.50"></div>
+      </div>
+      <div class="form-actions"><button class="btn btn-primary" type="submit">Proses data</button><button class="btn btn-outline" type="reset">Batal</button></div>
+    </form>
+    <div id="scholarshipResult" style="margin-top:18px" aria-live="polite"></div>
+  </section>
+
+  <section class="section" id="javascript">
+    <div class="section-heading"><div class="section-icon">🧩</div><div><h2>Latihan JavaScript Interaktif</h2><p>Contoh pseudo-class CSS, alert, Date, Window, event, Math, dan marquee.</p></div></div>
+    <div class="two-col">
+      <div class="mini-card link-demo"><h3>5. Latihan CSS Pseudo-Class</h3><p>Warna tautan berubah mengikuti urutan elemen.</p><ul><li><a href="#javascript">Link 1</a></li><li><a href="#javascript">Link 2</a></li><li><a href="#javascript">Link 3</a></li><li><a href="#javascript">Link 4</a></li><li><a href="#javascript">Link 5</a></li></ul></div>
+      <div class="mini-card"><h3>6. Latihan Fungsi Alert</h3><p>Klik tombol untuk menampilkan pesan.</p><div class="form-actions"><button class="btn btn-primary" id="morningBtn" type="button">🌤 Good Morning</button><button class="btn btn-outline" id="eveningBtn" type="button">🌙 Good Evening</button></div></div>
+      <div class="mini-card"><h3>7. Objek Date / Tanggal</h3><div class="date-panel"><div class="date-main" id="dateDisplay">Memuat tanggal…</div><div class="date-time" id="dateTimeDisplay"></div></div></div>
+      <div class="mini-card"><h3>8. Objek Window</h3><p>Contoh penggunaan alert, prompt, dan confirm.</p><button class="btn btn-primary" type="button" id="windowTestBtn">Mulai test</button><div id="windowOutput" class="code-output" style="margin-top:12px" aria-live="polite">Hasil akan tampil di sini.</div></div>
+    </div>
+  </section>
+
+  <section class="section" id="waktu">
+    <div class="section-heading"><div class="section-icon">🕒</div><div><h2>Form Nama dan Waktu</h2><p>Menampilkan waktu perangkat ketika formulir dikirim.</p></div><span class="badge">BAGIAN 9</span></div>
+    <form id="timeForm">
+      <div class="form-grid"><div class="field"><label for="firstName">Nama awal</label><input id="firstName" required placeholder="Masukkan nama"></div></div>
+      <div class="form-actions"><button class="btn btn-primary" type="submit">Simpan</button></div>
+    </form>
+    <div id="timeResult" style="margin-top:16px" aria-live="polite"></div>
+  </section>
+
+  <section class="section" id="registrasi">
+    <div class="section-heading"><div class="section-icon">📝</div><div><h2>Form Registrasi</h2><p>Latihan event focus dan blur untuk memeriksa isian.</p></div><span class="badge">BAGIAN 10</span></div>
+    <form id="registrationForm">
+      <div class="form-grid">
+        <div class="field"><label for="regNim">NIM</label><input id="regNim" required placeholder="Masukkan NIM"></div>
+        <div class="field"><label for="regName">Nama</label><input id="regName" required placeholder="Masukkan nama"></div>
+        <div class="field" style="grid-column:1/-1"><label for="regAddress">Alamat</label><input id="regAddress" required placeholder="Masukkan alamat"></div>
+      </div>
+      <div class="form-actions"><button class="btn btn-primary" type="submit">Kirim data</button><button class="btn btn-outline" type="reset">Reset</button></div>
+    </form>
+    <div id="regMessage" class="status" aria-live="polite"></div>
+  </section>
+
+  <section class="section">
+    <div class="section-heading"><div class="section-icon">✨</div><div><h2>Jam Digital dan Efek Tampilan</h2><p>Jam berjalan otomatis, contoh background, Math, dan teks bergerak.</p></div></div>
+    <div class="two-col">
+      <div class="mini-card"><h3>11. Jam Digital</h3><div class="clock" id="clockDisplay">00:00:00</div><p style="text-align:center;margin:8px 0 0">Waktu mengikuti perangkat kamu.</p></div>
+      <div class="mini-card"><h3>12. Background CSS</h3><div class="background-demo"><p><strong>Nama:</strong> hambali</p><p><strong>Umur:</strong> 39 tahun</p><p>Contoh kombinasi warna dan border.</p></div></div>
+      <div class="mini-card"><h3>13. Objek Math</h3><div class="code-output" id="mathOutput"></div><button class="btn btn-outline" id="mathRefresh" type="button" style="margin-top:12px">Acak angka lagi</button></div>
+      <div class="mini-card"><h3>14. Efek teks bergerak</h3><div class="marquee-box"><span class="marquee-text">Hallo Friend... Apa kabar? Welcome to my website ✦ </span></div></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-heading"><div class="section-icon">🖼️</div><div><h2>Contoh Halaman Frame</h2><p>Bagian penutup yang menampilkan identitas pembuat website.</p></div><span class="badge">BAGIAN 15</span></div>
+    <div class="date-panel"><div style="font-size:24px;font-weight:800;color:#172554">Halaman Contoh Website</div><p style="margin:8px 0 0;color:#64748b">Design by hambali</p></div>
+  </section>
+
+  <footer class="footer">
+    <strong>Web Belajar · HTML, CSS & JavaScript</strong>
+    <p>Dibuat untuk latihan pemrograman web · 2026</p>
+    <p>© <span id="footerYear"></span> hambali</p>
+  </footer>
+</main>
+
+<script>
+"use strict";
+
+const rupiah = value => new Intl.NumberFormat("id-ID", {
+  style:"currency", currency:"IDR", maximumFractionDigits:0
+}).format(value);
+
+const $ = id => document.getElementById(id);
+
+// Navigasi mobile
+$("menuToggle").addEventListener("click",()=>{
+  const nav=$("navLinks");
+  const opened=nav.classList.toggle("open");
+  $("menuToggle").setAttribute("aria-expanded",String(opened));
+});
+
+document.querySelectorAll("#navLinks a").forEach(link=>{
+  link.addEventListener("click",()=>{
+    $("navLinks").classList.remove("open");
+    $("menuToggle").setAttribute("aria-expanded","false");
+  });
+});
+
+// Bagian 2: Perhitungan tiket
+const prices={Jakarta:100000,Cirebon:150000,Tasikmalaya:200000};
+
+$("ticketForm").addEventListener("submit",event=>{
+  event.preventDefault();
+  const qty=Number($("ticketQty").value);
+
+  if(!Number.isInteger(qty)||qty<1){
+    $("ticketMessage").textContent="Jumlah tiket harus berupa bilangan bulat minimal 1.";
+    return;
+  }
+
+  const price=prices[$("destination").value];
+  const subtotal=price*qty;
+  const discount=$("member").checked?subtotal*.1:0;
+  const total=subtotal-discount;
+
+  $("ticketPrice").textContent=rupiah(price);
+  $("ticketSubtotal").textContent=rupiah(subtotal);
+  $("ticketDiscount").textContent=rupiah(discount);
+  $("ticketTotal").textContent=rupiah(total);
+  $("ticketMessage").textContent=`Perhitungan untuk ${$("ticketName").value.trim()||"pemesan"} berhasil.`;
+});
+
+$("ticketForm").addEventListener("reset",()=>{
+  setTimeout(()=>{
+    ["ticketPrice","ticketSubtotal","ticketDiscount","ticketTotal"].forEach(id=>{
+      $(id).textContent="Rp0";
+    });
+    $("ticketMessage").textContent="";
+  },0);
+});
+
+// Bagian 3: Variabel, string, dan loop
+$("basicOutput").innerHTML="<strong>NIM:</strong> 241091700197<br><strong>Nama:</strong> hambali<br><strong>Kelas:</strong> 03SISE002";
+$("stringOutput").innerHTML="<strong>Output:</strong> Aku sedang belajar Pemrograman Web menggunakan JavaScript.";
+$("loopOutput").innerHTML=Array.from(
+  {length:20},
+  (_,i)=>`${i+1}. Saya sedang belajar dasar pemrograman web`
+).join("<br>");
+
+// Bagian 4: Beasiswa
+$("scholarshipForm").addEventListener("submit",event=>{
+  event.preventDefault();
+
+  const name=$("schName").value.trim();
+  const nim=$("schNim").value.trim();
+  const kelas=$("schClass").value.trim();
+  const jurusan=$("schMajor").value;
+  const gender=$("schGender").value;
+  const ipk=Number($("schIpk").value);
+
+  if(ipk<0||ipk>4){
+    alert("IPK harus berada di antara 0,00 sampai 4,00.");
+    return;
+  }
+
+  const money=ipk>=3
+    ?"Mendapat beasiswa sebesar Rp1.000.000"
+    :"Belum memenuhi syarat beasiswa berdasarkan ketentuan IPK minimal 3,00";
+
+  const box=document.createElement("div");
+  box.className="note";
+
+  const title=document.createElement("strong");
+  title.textContent="Hasil Data Penerima Beasiswa";
+
+  const details=document.createElement("p");
+  details.style.margin="8px 0 0";
+  details.textContent=`Nama: ${name} | NIM: ${nim} | Kelas: ${kelas} | Jurusan: ${jurusan} | Jenis kelamin: ${gender} | IPK: ${ipk.toFixed(2)}. ${money}.`;
+
+  box.append(title,details);
+  $("scholarshipResult").replaceChildren(box);
+});
+
+$("scholarshipForm").addEventListener("reset",()=>{
+  $("scholarshipResult").replaceChildren();
+});
+
+// Bagian 6: Alert
+$("morningBtn").addEventListener("click",()=>alert("Good Morning!"));
+$("eveningBtn").addEventListener("click",()=>alert("Good Evening!"));
+
+// Bagian 7 dan 11: Tanggal dan jam digital
+const hari=["Minggu","Senin","Selasa","Rabu","Kamis","Jumat","Sabtu"];
+const bulan=["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"];
+
+function updateDate(){
+  const d=new Date();
+  $("dateDisplay").textContent=`${hari[d.getDay()]}, ${d.getDate()} ${bulan[d.getMonth()]} ${d.getFullYear()}`;
+  $("dateTimeDisplay").textContent="Pukul "+d.toLocaleTimeString("id-ID");
+  $("clockDisplay").textContent=d.toLocaleTimeString("id-ID",{hour12:false});
+}
+
+updateDate();
+setInterval(updateDate,1000);
+
+// Bagian 8: Window object
+$("windowTestBtn").addEventListener("click",()=>{
+  alert("Selamat datang!");
+
+  const angka=prompt("Inputkan angka favorit kamu:","0");
+
+  if(angka===null){
+    $("windowOutput").textContent="Tes dibatalkan pada bagian input angka.";
+    return;
+  }
+
+  const kenalan=confirm("Apakah kamu pria?");
+
+  $("windowOutput").textContent=
+    `Angka favorit kamu: ${angka}. ${kenalan?"Boleh kenalan, dong!":"Oke, baik!"}`;
+});
+
+// Bagian 9: Form nama dan waktu
+$("timeForm").addEventListener("submit",event=>{
+  event.preventDefault();
+
+  const name=$("firstName").value.trim();
+  if(!name)return;
+
+  const panel=document.createElement("div");
+  panel.className="note";
+
+  const title=document.createElement("strong");
+  title.textContent=`Selamat datang, ${name}!`;
+
+  const time=document.createElement("p");
+  time.style.margin="6px 0 0";
+  time.textContent="Form diterima pada: "+
+    new Date().toLocaleString("id-ID",{dateStyle:"full",timeStyle:"medium"});
+
+  panel.append(title,time);
+  $("timeResult").replaceChildren(panel);
+});
+
+// Bagian 10: Validasi registrasi
+[["regNim","NIM"],["regName","Nama"],["regAddress","Alamat"]].forEach(([id,label])=>{
+  $(id).addEventListener("blur",()=>{
+    if(!$(id).value.trim()){
+      $("regMessage").textContent=`Kolom ${label} belum diisi.`;
+    }
+  });
+
+  $(id).addEventListener("focus",()=>{
+    $("regMessage").textContent=`Silakan mengisi ${label.toLowerCase()}.`;
+  });
+});
+
+$("registrationForm").addEventListener("submit",event=>{
+  event.preventDefault();
+  $("regMessage").textContent="Terima kasih! Data registrasi berhasil diperiksa.";
+  alert("Terima kasih telah mengisi data.");
+});
+
+$("registrationForm").addEventListener("reset",()=>{
+  $("regMessage").textContent="";
+});
+
+// Bagian 13: Math
+function updateMath(){
+  const a=3,b=2;
+  const random=Math.round(Math.random()*16);
+
+  $("mathOutput").textContent=
+    `Angka terbesar antara ${a} dan ${b}: ${Math.max(a,b)}. `+
+    `${b} pangkat ${a}: ${Math.pow(b,a)}. `+
+    `Angka acak: ${random}. `+
+    `Akar kuadrat angka acak: ${Math.sqrt(random).toFixed(2)}.`;
+}
+
+$("mathRefresh").addEventListener("click",updateMath);
+updateMath();
+
+$("footerYear").textContent=new Date().getFullYear();
+</script>
+</body>
+</html>
